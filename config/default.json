@@ -1,0 +1,7 @@
+{
+    "DB": {
+        "NAME": "MyDB",
+        "HOST": "localhost",
+        "PORT": 27017
+    }
+}

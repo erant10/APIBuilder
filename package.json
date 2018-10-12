@@ -1,0 +1,23 @@
+{
+  "name": "apibuilder",
+  "version": "1.0.0",
+  "description": "A REST API builder for mongoDB collections",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "test"
+  },
+  "author": "Eran Toledano",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "config": "^2.0.1",
+    "express": "^4.16.3",
+    "lodash": "^4.17.11",
+    "mongoose": "^5.3.2"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.4"
+  }
+}
