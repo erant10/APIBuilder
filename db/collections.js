@@ -2,6 +2,7 @@ module.exports = {
     collections : [
         {
             name: 'users', //a unique lowercase name for the collection
+            description: 'A collection of users',
             operations: {
                 create: true,
                 retrieve: true,

@@ -8,7 +8,9 @@ app.use(bodyParser.json());
 mongoose.Promise = global.Promise;
 const DBConfig = config.get('DB');
 
-mongoose.connect(`mongodb://${DBConfig.HOST}:${DBConfig.PORT}/${DBConfig.NAME}`, { useNewUrlParser: true });
+const dbUserPrefix = DBConfig.USER? `${DBConfig.USER}:${DBConfig.PASSWORD}@` : '';
+const dbConnectionURL = `mongodb://${dbUserPrefix}${DBConfig.SERVER_NAME}:${DBConfig.PORT}/${DBConfig.NAME}`;
+mongoose.connect(dbConnectionURL, { useNewUrlParser: true } );
 
 require('./routes')(app);
 

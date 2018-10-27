@@ -9,7 +9,7 @@ function validateDBConf() {
         errors.push('Configuration json object must contain a DB property');
         return errors;
     }
-    const dbProps = ['NAME', 'HOST', 'PORT'];
+    const dbProps = ['NAME', 'SERVER_NAME', 'PORT'];
 
     dbProps.forEach(propName => {
         if (!config.has(`DB.${propName}`)) {

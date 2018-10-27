@@ -21,7 +21,7 @@ function checkOperation(collectionName, operation) {
 
 module.exports = {
     getDocs(req, res, next) {
-        // TODO: Generate API Doc
+        // TODO: Generate swagger.json
         res.send(Object.keys(models));
     },
 
@@ -78,7 +78,7 @@ module.exports = {
             .catch(next);
     },
 
-    // list all records with pagination
+    // list all records
     list(req, res, next) {
         const collectionName = req.params.collection;
 

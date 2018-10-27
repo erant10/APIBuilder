@@ -1,7 +1,9 @@
 {
     "DB": {
         "NAME": "MyDB",
-        "HOST": "localhost",
-        "PORT": 27017
+        "SERVER_NAME": "localhost",
+        "PORT": 27017,
+        "USER": "",
+        "PASSWORD": ""
     }
 }
