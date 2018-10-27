@@ -2,7 +2,12 @@ module.exports = {
     collections : [
         {
             name: 'users', //a unique lowercase name for the collection
-            operations:["create","retrieve","update","delete"], // TODO
+            operations: {
+                create: true,
+                retrieve: true,
+                update: true,
+                delete: true
+            },
             schema: {
                 name: {
                     type: String,

@@ -1,7 +1,22 @@
 const models = require('../db/models');
+const apiConfig = require('../db/collections');
+const httpStatus = require('http-status-codes');
+const messages = require('./messages');
 
-const messages = {
-    COLLECTION_NOT_EXIST: (collectionName) => `The collection ${collectionName} does not exist`
+function checkOperation(collectionName, operation) {
+    let collectionConfig = apiConfig.collections.find((collection) => collection.name === collectionName);
+
+    if (!collectionConfig) {
+        let err = new Error(messages.COLLECTION_NOT_EXIST(collectionName));
+        err.status = httpStatus.NOT_FOUND;
+        return err;
+    }
+    if (!collectionConfig.operations[operation]) {
+        let err = new Error(messages.OPERATION_NOT_ALLOWED(collectionName));
+        err.status = httpStatus.METHOD_NOT_ALLOWED;
+        return err;
+    }
+    return null;
 }
 
 module.exports = {
@@ -12,10 +27,11 @@ module.exports = {
 
     create(req, res, next) {
         const collectionName = req.params.collection;
+
+        const opErr = checkOperation(collectionName, 'create');
+        if (opErr) throw opErr;
+
         const Model = models[collectionName];
-        if (!Model) {
-            throw new Error(messages.COLLECTION_NOT_EXIST(collectionName));
-        }
         const props = req.body;
         Model.create(props)
             .then(records => {
@@ -23,12 +39,16 @@ module.exports = {
             })
             .catch((err) => {
                 console.log("failed", err);
-                next();
+                throw err;
             });
     },
 
     edit(req, res, next) {
         const collectionName = req.params.collection;
+
+        const opErr = checkOperation(collectionName, 'update');
+        if (opErr) throw opErr;
+
         const Model = models[collectionName];
         if (!Model) {
             throw new Error(messages.COLLECTION_NOT_EXIST(collectionName));
@@ -44,19 +64,27 @@ module.exports = {
 
     delete(req, res, next) {
         const collectionName = req.params.collection;
+
+        const opErr = checkOperation(collectionName, 'delete');
+        if (opErr) throw opErr;
+
         const Model = models[collectionName];
         if (!Model) {
             throw new Error(messages.COLLECTION_NOT_EXIST(collectionName));
         }
 
         Model.findByIdAndRemove({ _id: req.params.id })
-            .then(driver => res.status(204).send(driver))
+            .then(driver => res.status(httpStatus.NO_CONTENT).send(driver))
             .catch(next);
     },
 
     // list all records with pagination
     list(req, res, next) {
         const collectionName = req.params.collection;
+
+        const opErr = checkOperation(collectionName, 'retrieve');
+        if (opErr) throw opErr;
+
         const Model = models[collectionName];
         if (!Model) {
             throw new Error(messages.COLLECTION_NOT_EXIST(collectionName));
@@ -66,4 +94,4 @@ module.exports = {
             .catch(next);
     }
 
-}
+};
