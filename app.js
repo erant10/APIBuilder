@@ -8,10 +8,11 @@ app.use(bodyParser.json());
 mongoose.Promise = global.Promise;
 const DBConfig = config.get('DB');
 
-const dbUserPrefix = DBConfig.USER? `${DBConfig.USER}:${DBConfig.PASSWORD}@` : '';
-const dbConnectionURL = `mongodb://${dbUserPrefix}${DBConfig.SERVER_NAME}:${DBConfig.PORT}/${DBConfig.NAME}`;
-mongoose.connect(dbConnectionURL, { useNewUrlParser: true } );
-
+if(process.env.NODE_ENV !== 'test') {
+    const dbUserPrefix = DBConfig.USER ? `${DBConfig.USER}:${DBConfig.PASSWORD}@` : '';
+    const dbConnectionURL = `mongodb://${dbUserPrefix}${DBConfig.SERVER_NAME}:${DBConfig.PORT}/${DBConfig.NAME}`;
+    mongoose.connect(dbConnectionURL, {useNewUrlParser: true});
+}
 require('./routes')(app);
 
 // catch 404 and forward to error handler

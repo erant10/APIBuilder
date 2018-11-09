@@ -1,4 +1,5 @@
-const models = require('../db/models');
+const collectionData = require('../db/collections');
+const models = require('../db/models')(collectionData);
 const apiConfig = require('../db/collections');
 const httpStatus = require('http-status-codes');
 const messages = require('./messages');
