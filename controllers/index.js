@@ -1,6 +1,10 @@
-const collectionData = require('../db/collections');
-const models = require('../db/models')(collectionData);
-const apiConfig = require('../db/collections');
+let apiConfig;
+if(process.env.NODE_ENV !== 'test') {
+    apiConfig = require('../db/collections');
+} else {
+    apiConfig = require('../test/collections_test');
+}
+const models = require('../db/models')(apiConfig);
 const httpStatus = require('http-status-codes');
 const messages = require('./messages');
 

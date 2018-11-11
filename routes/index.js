@@ -10,7 +10,7 @@ module.exports = (app) => {
     app.put('/api/:collection/:id', controller.edit);
 
     // delete a record
-    app.delete('/api/:collection/id', controller.delete);
+    app.delete('/api/:collection/:id', controller.delete);
 
     // get a list of records
     app.get('/api/:collection', controller.list);

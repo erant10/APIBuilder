@@ -10,10 +10,10 @@ before(done => {
         });
 });
 
-after("Destroy test collections", done => {
-    const collections = mongoose.connection.collections;
-    let collectionNames = Object.keys(collections);
-    Promise.all(collectionNames.map(name => collections[name].drop()))
-        .then(() => done())
-        .catch((err) => done(err));
+beforeEach("Destroy test collections", async () => {
+    const collections = await mongoose.connection.db.collections();
+
+    for (let collection of collections) {
+        await collection.deleteOne();
+    }
 });

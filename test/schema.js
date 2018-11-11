@@ -102,7 +102,6 @@ describe("Test Schema build", () => {
             };
             Item2.create(props)
                 .then(record => {
-                    console.log("created record", JSON.stringify(record, null, 2));
                     assert.deepStrictEqual(record.str, props.str);
                     done();
                 })
